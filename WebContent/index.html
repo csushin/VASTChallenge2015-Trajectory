@@ -1,0 +1,217 @@
+<!DOCTYPE HTML>
+
+<html lang="en">
+<head>
+  <style>
+    html, body, #map{
+      height: 100%;
+    }
+    .info {
+      padding: 6px 8px;
+      /*font: 14px/16px Arial, Helvetica, sans-serif;*/
+      background: white;
+      background: rgba(255,255,255,0.8);
+      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      border-radius: 5px;
+    }
+
+    .node circle {
+      fill: #fff;
+      stroke: steelblue;
+      stroke-width: 3px;
+    }
+
+    .node text { font: 12px sans-serif; }
+
+    .link {
+      fill: none;
+      stroke: #ccc;
+      stroke-width: 2px;
+    }
+
+    .d3-tip {
+      line-height: 1;
+      font-weight: bold;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      border-radius: 2px;
+    }
+
+    /* Creates a small triangle extender for the tooltip */
+
+    .d3-tip:after {
+      box-sizing: border-box;
+      display: inline;
+      font-size: 10px;
+      width: 100%;
+      line-height: 1;
+      color: rgba(0, 0, 0, 0.8);
+      content: "\25BC";
+      position: absolute;
+      text-align: center;
+    }
+    /* Style northward tooltips differently */
+
+    .d3-tip.n:after {
+      margin: -1px 0 0 0;
+      top: 100%;
+      left: 0;
+    }
+
+    .nopadding {
+       padding: 0px !important;
+       margin: 0px !important;
+    }
+
+    .hide{
+      display: none;
+    }
+
+    .chart {
+    }
+
+    .main text {
+        font: 10px sans-serif;  
+    }
+
+    .smallHist text{
+      font: 10px sans-serif;
+    }
+
+    .axis line, .axis path {
+        shape-rendering: crispEdges;
+        stroke: black;
+        fill: none;
+    }
+
+    .bar rect {
+      fill: steelblue;
+      shape-rendering: crispEdges;
+    }
+
+    .bar text {
+      fill: #fff;
+    }
+
+    .slide-back {
+      position:absolute;
+      height:100%;
+    }
+
+    .center{
+
+    width: 150px;
+      margin: 40px auto;
+    }
+
+    #tooltip{
+      font-family: sans-serif;
+      font-size: 14px;
+      font-weight: bold;
+      color: black;
+    } 
+
+    .d3-tip {
+      line-height: 1;
+      font-weight: bold;
+      padding: 12px;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      border-radius: 2px;
+    }
+
+    /* Creates a small triangle extender for the tooltip */
+
+    .d3-tip:after {
+      box-sizing: border-box;
+      display: inline;
+      font-size: 10px;
+      width: 100%;
+      line-height: 1;
+      color: rgba(0, 0, 0, 0.8);
+      content: "\25BC";
+      position: absolute;
+      text-align: center;
+    }
+    /* Style northward tooltips differently */
+
+    .d3-tip.n:after {
+      margin: -1px 0 0 0;
+      top: 100%;
+      left: 0;
+    }
+
+    .legend {
+      text-align: left;
+      line-height: 18px;
+      color: #555;
+    }
+
+    .legend i {
+      float: left;
+      margin-right: 8px;
+      width: 18px;
+      height: 18px;
+      opacity: 0.7;
+    }
+
+    rect.bordered {
+        stroke: #E6E6E6;
+        stroke-width:2px;   
+      }
+
+     text.mono {
+        font-size: 12pt;
+        font-family: Consolas, courier;
+        fill: #aaa;
+      }
+
+      text.axis-workweek {
+        fill: #000;
+      }
+
+      text.axis-worktime {
+        fill: #000;
+      }
+
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1" charset="UTF-8"/>
+  <link rel="stylesheet" href="http://watersvr.dtn.asu.edu:8880/lib/jquery-ui-1.11.4.custom/jquery-ui.css">
+  <link rel="stylesheet" href="http://watersvr.dtn.asu.edu:8880/lib/jquery-ui-1.11.4.custom/jquery-ui.theme.css">
+  <link rel="stylesheet" href="http://watersvr.dtn.asu.edu:8880/lib/jquery-ui-1.11.4.custom/jquery-ui.structure.css">
+  <!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css"> -->
+  <link rel="stylesheet" href="http://watersvr.dtn.asu.edu:8880/bootstrap/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="http://watersvr.dtn.asu.edu:8880/bootstrap/css/bootstrap-theme.min.css" />
+  <link rel="stylesheet" href="http://watersvr.dtn.asu.edu:8880/css/d3.parcoords.css" />
+  <link rel="stylesheet" href="http://watersvr.dtn.asu.edu:8880/css/leaflet.extra-markers.min.css">
+  <!-- <link rel="stylesheet" href="https://syntagmatic.github.io/parallel-coordinates/d3.parcoords.css" /> -->
+  <link rel="stylesheet" href="http://watersvr.dtn.asu.edu:8880/css/leaflet.0.7.3.css" />
+  <script type = "text/javascript" src="http://watersvr.dtn.asu.edu:8880/lib/leaflet-src.js"></script>
+  <script type = "text/javascript" src="http://watersvr.dtn.asu.edu:8880/lib/d3/d3.min.js"></script>
+  <script type = "text/javascript" src="http://watersvr.dtn.asu.edu:8880/lib/jquery-2.1.1.min.js"></script>
+  <script type = "text/javascript" src="http://watersvr.dtn.asu.edu:8880/lib/jquery-ui-1.11.4.custom/jquery-ui.js"></script>
+  <script type = "text/javascript" src="http://watersvr.dtn.asu.edu:8880/lib/d3.tip.js"></script>
+  <script type = "text/javascript" src="http://watersvr.dtn.asu.edu:8880/lib/hex-to-rgb.min.js"></script>
+  <!--<script type=  "text/javascript" src="https://syntagmatic.github.io/parallel-coordinates/d3.parcoords.js"></script>-->
+  <script type = "text/javascript" src="http://watersvr.dtn.asu.edu:8880/bootstrap/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+<div class="container-fluid" style="height: 100%">
+  <div class="row" style="height: 5%" id="tabsList">
+    <ul class="nav nav-tabs" role="tablist">
+    <li id="generalTab" role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab">201604</a></li>
+  </ul>
+  </div>
+
+  <div class="tab-content row container-fluid" style="height: 95%; width: 100%">
+      <div id="matrix" style="float: left; width:70%; height: 70%">
+      </div>
+  </div>
+    
+</div>
+<script src="js/wtmatrix2.js"></script>
+</body>
+</html>
+
