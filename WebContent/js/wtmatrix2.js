@@ -67,16 +67,16 @@ function drawMatrix(data, container){
 		.attr("transform", "translate("+gridWidth/2.0+",-6)")
 		.attr("class", "timeLabel mono axis axis-worktime");
 
-	var attractionLabels = bodyG.selectAll(".attractionLabel")
-		.data(d3.range(0, attractionsAmount))
-		.enter()
-		.append("text")
-		.text(function(d, i) { return i;})
-		.attr("y", function(d, i) { return i*gridHeight;})
-		.attr("x", 0)
-		.style("text-anchor", "middle")
-		.attr("transform", "translate(0,-"+ margin.left+ ")")
-		.attr("class", "timeLabel mono axis axis-worktime");
+	// var attractionLabels = bodyG.selectAll(".attractionLabel")
+	// 	.data(d3.range(0, attractionsAmount))
+	// 	.enter()
+	// 	.append("text")
+	// 	.text(function(d, i) { return i;})
+	// 	.attr("y", function(d, i) { return i*gridHeight;})
+	// 	.attr("x", 0)
+	// 	.style("text-anchor", "middle")
+	// 	.attr("transform", "translate(0,-"+ margin.left+ ")")
+	// 	.attr("class", "timeLabel mono axis axis-worktime");
 
 	var tip = d3.tip()
 			  .attr('class', 'd3-tip')
