@@ -158,7 +158,7 @@
 
     rect.bordered {
         stroke: #E6E6E6;
-        stroke-width:2px;   
+        stroke-width:1px;   
       }
 
      text.mono {
@@ -206,8 +206,17 @@
   </div>
 
   <div class="tab-content row container-fluid" style="height: 95%; width: 100%">
-      <div id="matrix" style="float: left; width:70%; height: 70%">
-      </div>
+    <div id="matrixTabs" style="float: left; width:100%; height: 100%">
+      <ul class="nav nav-tabs" role="tablist">
+        <li><a href="#matrix-1" role="presentation" class="active">Friday</a aria-controls="general" role="tab" data-toggle="tab"></li>
+        <li><a href="#matrix-2" role="presentation" class="active">Saturday</a aria-controls="general" role="tab" data-toggle="tab"></li>
+        <li><a href="#matrix-3" role="presentation" class="active">Sunday</a aria-controls="general" role="tab" data-toggle="tab"></li>
+      </ul>
+      <div id="matrix-1" style="float: left; width:70%; height: 80%; display: block"></div>
+      <div id="matrix-2" style="float: left; width:70%; height: 80%; display: none"></div>
+      <div id="matrix-3" style="float: left; width:70%; height: 80%; display: none"></div>
+    </div>
+    
   </div>
     
 </div>
